@@ -29,7 +29,7 @@ jobs:
       - name: Configure Socket CLI
         run: |
           mkdir -p "$HOME/.local/share/socket/settings"
-          echo '{"defaultOrg":"david-s-github"}' > "$HOME/.local/share/socket/settings/config.json"
+          echo -n '{"defaultOrg":"david-s-github"}' | base64 > "$HOME/.local/share/socket/settings/config.json"
 
       - name: Run Socket Fix
         env:
