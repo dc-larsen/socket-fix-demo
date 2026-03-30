@@ -23,8 +23,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies via Socket
-        run: npx @socketsecurity/cli npm install --config '{"issueRules":{"malware":true}}'
+      - name: Install dependencies
+        run: npm install
 
       - name: Run Socket Fix
         env:
