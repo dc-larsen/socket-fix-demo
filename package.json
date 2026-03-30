@@ -4,7 +4,7 @@
   "description": "Demo repo for testing socket fix --autopilot",
   "private": true,
   "dependencies": {
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "minimist": "1.2.5",
     "json5": "2.2.2",
     "semver": "7.5.2",
