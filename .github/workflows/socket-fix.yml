@@ -1,0 +1,35 @@
+name: Socket Fix
+
+on:
+  schedule:
+    # Runs daily at midnight and noon UTC
+    - cron: '0 0 * * *'
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual triggers for testing
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  socket-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies via Socket
+        run: npx @socketsecurity/cli npm install --config '{"issueRules":{"malware":true}}'
+
+      - name: Run Socket Fix
+        env:
+          SOCKET_CLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOCKET_CLI_GIT_USER_EMAIL: socket-fix[bot]@users.noreply.github.com
+          SOCKET_CLI_GIT_USER_NAME: socket-fix[bot]
+          SOCKET_CLI_API_TOKEN: ${{ secrets.SOCKET_CLI_API_TOKEN }}
+        run: npx @socketsecurity/cli fix --autopilot
