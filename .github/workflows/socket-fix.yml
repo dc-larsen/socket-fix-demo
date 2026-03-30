@@ -27,9 +27,12 @@ jobs:
         run: npm install
 
       - name: Configure Socket CLI
+        env:
+          SOCKET_CLI_API_TOKEN: ${{ secrets.SOCKET_CLI_API_TOKEN }}
         run: |
           mkdir -p "$HOME/.local/share/socket/settings"
-          echo -n '{"defaultOrg":"david-s-github"}' | base64 > "$HOME/.local/share/socket/settings/config.json"
+          CONFIG=$(echo -n "{\"defaultOrg\":\"david-s-github\",\"enforcedOrgs\":[\"346149\"],\"apiToken\":\"${SOCKET_CLI_API_TOKEN}\",\"apiBaseUrl\":\"\",\"apiProxy\":\"\"}" | base64 -w 0)
+          echo "$CONFIG" > "$HOME/.local/share/socket/settings/config.json"
 
       - name: Run Socket Fix
         env:
