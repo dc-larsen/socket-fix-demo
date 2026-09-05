@@ -45,6 +45,24 @@ do not trigger other workflows, so your required checks never run and auto-merge
 waits forever. The workflow prefers `SOCKET_FIX_PAT` and falls back to
 `GITHUB_TOKEN` so it still runs without one, but auto-merge won't complete.
 
+## The fix engine can trip your own policy
+
+`socket fix` installs its fix engine (`@coana-tech/cli`) through the
+Socket-wrapped package manager. That engine ships frequent releases, so an org
+policy that blocks `recentlyPublished` will stop the run before a single fix is
+computed. The failure looks like this:
+
+```
+@coana-tech/cli@15.10.36:
+  recentlyPublished (moderate; blocked)
+Socket pnpm exiting due to risks.
+```
+
+The workflow sets `SOCKET_CLI_ACCEPT_RISKS: '1'` on the fix step to allow it.
+That override applies to installing the first-party engine, not to how your own
+dependencies get evaluated. Check this before a pilot: if your org blocks
+`recentlyPublished`, you will hit it on the first run.
+
 ## Scheduled workflows expire
 
 GitHub disables cron workflows after ~60 days of repo inactivity. That happened
