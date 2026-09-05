@@ -1,7 +1,7 @@
 {
   "name": "socket-fix-demo",
   "version": "1.0.0",
-  "description": "Demo repo for testing socket fix --autopilot",
+  "description": "Demo repo for socket fix --autopilot constrained to minor/patch upgrades (pnpm)",
   "private": true,
   "dependencies": {
     "lodash": "4.17.20",
@@ -10,5 +10,6 @@
     "semver": "7.5.2",
     "tough-cookie": "4.1.2",
     "express": "4.17.1"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }
